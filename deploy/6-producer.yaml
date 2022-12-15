@@ -6,10 +6,6 @@ metadata:
   name: producer
   namespace: kafkaplaypen
 spec:
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - name: tcp
     port: 8083
