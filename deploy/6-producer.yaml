@@ -1,44 +1,31 @@
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: producer
-  name: producer
-  namespace: kafkaplaypen
-spec:
-  ports:
-  - name: tcp
-    port: 8083
-    protocol: TCP
-  selector:
-    app: producer
-  sessionAffinity: None
-  type: ClusterIP
----
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: producer
-  namespace: kafkaplaypen
 spec:
+  replicas: 3
   selector:
     matchLabels:
-      app: producer # has to match .spec.template.metadata.labels
-  serviceName: producer
-  replicas: 30
+      run: producer
   template:
     metadata:
       labels:
-        app: producer # has to match .spec.selector.matchLabels
+        run: producer
     spec:
-      terminationGracePeriodSeconds: 10
       containers:
-      - name: producer
-        image: marigonsilva/producer:latest
-        ports:
-        - containerPort: 8083
+        - command:
+            - /opt/kafka/bin/kafka-producer-perf-test.sh
+            - --topic
+            - my-topic
+            - --num-records
+            - "10000000"
+            - --record-size
+            - "100"
+            - --throughput
+            - "50000"
+            - --producer-props
+            - bootstrap.servers=:kafka-local.kafkaplaypen.svc.cluster.local:9092
+          image: strimzi/kafka
+          imagePullPolicy: Always
           name: producer
-        command:
-        - sh
-        - -c
-        - "exec python3 -u ./producer.py"
+          resources: {}
