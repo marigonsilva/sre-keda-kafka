@@ -11,10 +11,6 @@ metadata:
   name: kafka-local
   namespace: kafkaplaypen
 spec:
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - name: tcp-client
     port: 9092
@@ -43,12 +39,6 @@ metadata:
   namespace: kafkaplaypen
 spec:
   clusterIP: None
-  clusterIPs:
-  - None
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - name: tcp-client
     port: 9092
@@ -80,10 +70,6 @@ metadata:
   name: kafka-local-zookeeper
   namespace: kafkaplaypen
 spec:
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - name: tcp-client
     port: 2181
@@ -120,12 +106,6 @@ metadata:
   namespace: kafkaplaypen
 spec:
   clusterIP: None
-  clusterIPs:
-  - None
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - name: tcp-client
     port: 2181
